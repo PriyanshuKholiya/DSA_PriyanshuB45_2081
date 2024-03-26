@@ -1,8 +1,9 @@
 #include<stdio.h>
 #include<conio.h>
-#define MAXSIZE 10
+#define MAXSIZE 10 
+//we use a macro to define the max size of the array if we change the value of macro here, the value of macro in all other places changes automatically
 
-int stack[MAXSIZE],top=-1;
+int stack[MAXSIZE],top=-1;//we use top as a pointer to traverse the stack
 
 void Push();
 void Pop();
@@ -40,12 +41,12 @@ void Push(){
 	else
 	{ printf("Enter the element you want to push ");
 	scanf("%d",&n);
-	top++;
+	top++;//updates the top 
 	stack[top]=n;
 	}
 	}
 	
-void Pop(){
+void Pop(){//it doesnt actually delete the element it just decreases the pointer by a unit 
 	if(top<0)
 	printf("stack is empty");
 	else
@@ -61,7 +62,7 @@ void Display(){
 	printf("stack is empty");
 	else
 	{printf("The elements of the stack are:");
-	for(int i=top;i>=0;i--)
+	for(int i=top;i>=0;i--)//prints elements in a reverse order from top to bottom
 	printf("\n%d",stack[i]);
 	}
 }
