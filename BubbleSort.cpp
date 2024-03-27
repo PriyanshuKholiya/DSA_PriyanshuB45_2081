@@ -41,7 +41,7 @@ void inputArray() {
 void bubbleSort() {
 int temp;
 for (int i = 0; i < size - 1; i++) {//loop for passes
-     for (int j = 0; j < size - i - 1; j++) {//loop for comparisions at the end of this loop for every pass the largest element is sorted 
+     for (int j = 0; j < size - i - 1; j++) {//loop for comparisions based on the fact that i largest elements will be sorted for ith pass
             if (array[j] > array[j + 1]) {
                 temp = array[j];
                 array[j] = array[j + 1];
