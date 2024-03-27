@@ -6,7 +6,7 @@ struct node {
     struct node *next;
 };
 
-struct node *start = NULL, *newnode, *temp;;
+struct node *start = NULL, *newnode, *temp,prev*;
 
 void create();
 void display();
@@ -138,27 +138,26 @@ void insert_patloc() {
     newnode = (struct node *)malloc(sizeof(struct node));
     newnode->data = n;
 
-    if (pos <= 1) {
+    if (pos <= 1) {//if position is less than or equals to 1 newnode is inserted at the begginning and returns
         newnode->next = start;
         start = newnode;
         return;
     }
-    temp = start;
-    while (i < pos - 1 && temp != NULL) {
+    temp = start;//otherwise the while loop is used to encounter the specified position temp is used to traverse the list and its initial pos is 1
+    while (i < pos - 1 && temp != NULL) {//while both the conditions are satisfied the loop runs
         temp = temp->next;
         i++;
     }
-    if (temp == NULL) {
+    if (temp == NULL) {//if temp is assigned NULL that means it had surpassed the last node and hence the pos is out of range 
         printf("Position out of range\n");
         return;
     }
-    newnode->next = temp->next;
-    temp->next = newnode;
+    newnode->next = temp->next;//what the element at that position was pointing to is transferred to the newnode's next
+    temp->next = newnode;//making newnode the nth node
 }
 
 void insert_before() {
     int n, elebef;
-    struct node *newnode, *temp, *prev;
 
     printf("\nEnter the element you want to insert: ");
     scanf("%d", &n);
@@ -167,27 +166,27 @@ void insert_before() {
     newnode = (struct node *)malloc(sizeof(struct node));
     newnode->data = n;
 
-    if (start == NULL) {
+    if (start == NULL) {//there are no elements to insert before
         printf("List is empty\n");
         return;
     }
 
     temp = start;
     prev = NULL;
-    while (temp != NULL && temp->data != elebef) {
+    while (temp != NULL && temp->data != elebef) {//searches for element till the temp doesnt encounter null as well as elebef is not encountered
         prev = temp;
         temp = temp->next;
     }
 
-    if (temp == NULL) {
+    if (temp == NULL) {//if the loop had stopped because of surpassing the lastnode that means element was not there in the list
         printf("Element %d not found\n", elebef);
         return;
     }
 
-    if (prev == NULL) {
+    if (prev == NULL) {//means the first element was the element to be searched
         newnode->next = start;
         start = newnode;
-    } else {
+    } else {//at positions other than first 
         newnode->next = temp;
         prev->next = newnode;
     }
@@ -195,7 +194,6 @@ void insert_before() {
 
 void insert_after() {
     int n, eleaft;
-    struct node *newnode, *temp;
 
     printf("\nEnter the element you want to insert: ");
     scanf("%d", &n);
@@ -204,59 +202,58 @@ void insert_after() {
     newnode = (struct node *)malloc(sizeof(struct node));
     newnode->data = n;
 
-    if (start == NULL) {
+    if (start == NULL) {//there are no elements to insert after
         printf("List is empty\n");
         return;
     }
 
     temp = start;
-    while (temp != NULL && temp->data != eleaft) {
+    while (temp != NULL && temp->data != eleaft) {//searches tii it encounters the element or surpasses the last node
         temp = temp->next;
     }
 
-    if (temp == NULL) {
+    if (temp == NULL) {//it it surpasses the last node means the search failed
         printf("Element %d not found\n", eleaft);
         return;
     }
 
-    newnode->next = temp->next;
+    newnode->next = temp->next;//otherwise it assigns the newnode the address temp was holding and connects temp to newnode
     temp->next = newnode;
 }
 
 void delete_beg() {
     struct node *temp;
 
-    if (start == NULL) {
+    if (start == NULL) {//no element ro delete
         printf("List is empty\n");
-        return;
+        return;//returns without executing further
     }
 
-    temp = start;
+    temp = start;//assigns start to temp and moves start forward
     start = start->next;
     printf("Deleted element is %d\n", temp->data);
-    free(temp);
+    free(temp);//frees temp
 }
 
 void delete_end() {
-    struct node *temp, *prev;
 
-    if (start == NULL) {
+    if (start == NULL) {//no elements to delete
         printf("List is empty\n");
         return;
     }
 
-    temp = start;
+    temp = start;//assigns start to temp and NULL to prev which follows the position of temp later in the while loop
     prev = NULL;
-    while (temp->next != NULL) {
+    while (temp->next != NULL) {//temp encounters last node and prev encounters the second last node
         prev = temp;
         temp = temp->next;
     }
 
-    if (prev == NULL) {
+    if (prev == NULL) {//if there was only one element it will delete the start node 
         printf("Deleted element is %d\n", start->data);
         free(start);
         start = NULL;
-    } else {
+    } else {//otherwise it will delete tmp which traverses to the last node and sets prev as the last node by assigning NULL in its address part
         printf("Deleted element is %d\n", temp->data);
         free(temp);
         prev->next = NULL;
@@ -265,9 +262,8 @@ void delete_end() {
 
 void delete_patloc() {
     int pos, i = 1;
-    struct node *temp, *prev;
 
-    if (start == NULL) {
+    if (start == NULL) {//no elements to delete
         printf("List is empty\n");
         return;
     }
@@ -275,25 +271,25 @@ void delete_patloc() {
     printf("\nEnter the position of element to be deleted: ");
     scanf("%d", &pos);
 
-    temp = start;
+    temp = start;//assigns start to temp and NULL to prev which follows the position of temp later in the while loop
     prev = NULL;
-    while (temp != NULL && i < pos) {
+    while (temp != NULL && i < pos) {//iterates while temp doesn't surpass the last node as well as i is less than the position entered
         prev = temp;
         temp = temp->next;
         i++;
     }
 
-    if (temp == NULL) {
+    if (temp == NULL) {//if while loop stopped because temp surpassed the last node
         printf("Position out of range\n");
         return;
     }
 
-    if (prev == NULL) {
-        start = start->next;
+    if (prev == NULL) {//only one element in the list that is start will be deleted
+        start = start->next;//NULL
         printf("The deleted element is %d\n", temp->data);
         free(temp);
     } else {
-        prev->next = temp->next;
+        prev->next = temp->next;//links prev to the node after temp
         printf("The deleted element is %d\n", temp->data);
         free(temp);
     }
