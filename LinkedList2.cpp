@@ -6,7 +6,7 @@ struct node {
     struct node *next;
 };
 
-struct node *start = NULL;
+struct node *start = NULL, *newnode, *temp;;
 
 void create();
 void display();
@@ -64,57 +64,52 @@ int main() {
 void create() {
     int n;
     char ch;
-    struct node *newnode, *temp;
-
-    printf("\nEnter first element: ");
+    
+    printf("\nEnter first element: ");//Assign the first element to start
     scanf("%d", &n);
-    newnode = (struct node *)malloc(sizeof(struct node));
-    newnode->data = n;
-    newnode->next = NULL;
-    start = newnode;
-
-    do {
+    start = (struct node *)malloc(sizeof(struct node));
+    start->data = n;
+    start->next = NULL;
+    
+    do {//will follow at least once
         printf("\nDo you want to continue (y/n): ");
         scanf(" %c", &ch);
         if (ch == 'y' || ch == 'Y') {
             printf("\nEnter next element: ");
             scanf("%d", &n);
-            newnode = (struct node *)malloc(sizeof(struct node));
+            newnode = (struct node *)malloc(sizeof(struct node));//create a new node and link it to the prev node's next
             newnode->data = n;
-            newnode->next = NULL;
+            newnode->next = NULL;//define newnode's next as NULL since it will be the last element
             temp = start;
-            while (temp->next != NULL) {
+            while (temp->next != NULL) {//temp traverses to the last node from start in the current list
                 temp = temp->next;
             }
-            temp->next = newnode;
+            temp->next = newnode;//join the newnode to the end 
         }
     } while (ch == 'y' || ch == 'Y');
 }
 
 void display() {
-    struct node *temp;
     if (start == NULL) {
         printf("List is empty\n");
-        return;
+        return;//returns the function and prevents further execution
     }
     temp = start;
-    while (temp != NULL) {
-        printf("%d ", temp->data);
+    while (temp != NULL) {//prints elements till temp passes the last node and gets assigned null which was contained in the last node's next
+        printf("\n%d ", temp->data);
         temp = temp->next;
     }
-    printf("\n");
 }
 
 void insert_beg() {
     int n;
-    struct node *newnode;
-
+    
     printf("\nEnter element to insert at the beginning: ");
     scanf("%d", &n);
     newnode = (struct node *)malloc(sizeof(struct node));
     newnode->data = n;
-    newnode->next = start;
-    start = newnode;
+    newnode->next = start;// create a newnode and put start in its address part
+    start = newnode;//shift start to the newnode
 }
 
 void insert_end() {
@@ -127,15 +122,14 @@ void insert_end() {
     newnode->data = n;
     newnode->next = NULL;
     temp = start;
-    while (temp->next != NULL) {
+    while (temp->next != NULL) {//move tmp till it encounters the last node ie the node whose address part is NULL
         temp = temp->next;
     }
-    temp->next = newnode;
+    temp->next = newnode;//link the newnode to the address part of the last node making newnode the new lastnode
 }
 
 void insert_patloc() {
     int n, pos, i = 1;
-    struct node *newnode, *temp;
 
     printf("\nEnter element to insert: ");
     scanf("%d", &n);
@@ -149,18 +143,15 @@ void insert_patloc() {
         start = newnode;
         return;
     }
-
     temp = start;
     while (i < pos - 1 && temp != NULL) {
         temp = temp->next;
         i++;
     }
-
     if (temp == NULL) {
         printf("Position out of range\n");
         return;
     }
-
     newnode->next = temp->next;
     temp->next = newnode;
 }
