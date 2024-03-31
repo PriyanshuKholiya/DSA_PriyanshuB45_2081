@@ -1,8 +1,7 @@
 #include<stdio.h>
-#include<conio.h>
 #define MAXSIZE 10
 
-int queue[MAXSIZE],front=0,rear=-1;
+int queue[MAXSIZE],front=0,rear=-1;//front to delete elements and rear to insert elements
 
 void Insert();
 void Delete();
@@ -34,33 +33,33 @@ int main() {
 
 void Insert(){
 	int n;
-	if(rear==MAXSIZE-1)
+	if(rear==MAXSIZE-1)//no more elements can be inserted as rear has reached the end of the queue
 	printf("Queue is full");
 	else
 	{ printf("Enter the element you want to insert ");
 	scanf("%d",&n);
-	rear++;
+	rear++;//increase rear by 1 and insert the new element
 	queue[rear]=n;
 	}
 	}
 	
 void Delete(){
-	if(front>rear)
+	if(front>rear)//check if queue is empty
 	printf("queue is empty");
 	else
 	{int n;
-	n=queue[front];
+	n=queue[front];//delete the front element
 	front++;
 	printf("The deleted elememt is %d",n);
 	}
 }
 
 void Display(){
-	if(front>rear)
+	if(front>rear)//check if the queue is empty 
 	printf("Queue is empty");
 	else
 	{printf("\nThe elements of the stack are:");
-	for(int i=rear;i>=front;i--)
+	for(int i=rear;i>=front;i--)//prints elements from rear to front
 	printf("\n%d",queue[i]);
 	}
 }
