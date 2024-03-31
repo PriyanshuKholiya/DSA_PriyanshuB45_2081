@@ -4,7 +4,7 @@
 #define MAX_SIZE 100
 
 int array[MAX_SIZE];
-int size=0 ;//to check if array is empty
+int size = 0;//to check underflow
 
 void createArray();
 void displayArray();
@@ -23,7 +23,7 @@ int main() {
     int choice;
 
     do {
-        printf("\n-----Array Operations Menu-------\n");
+        printf("\nArray Operations Menu\n");
         printf("1. Create Array\n");
         printf("2. Display Array\n");
         printf("3. Insert at Beginning\n");
@@ -37,7 +37,6 @@ int main() {
         printf("11. Delete After Element\n");
         printf("12. Delete Before Element\n");
         printf("13. Exit\n");
-	printf("------------------------------------\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -91,17 +90,17 @@ int main() {
 
 void createArray() {
     int i;
-    printf("Enter the size of the array: ");//input size of the array
+    printf("Enter the size of the array: ");//input size
     scanf("%d", &size);
-    if (n <= 0 || n > MAX_SIZE) {//check if the size is invalid
-        printf("Invalid size! Size should be between 1 and %d\n", MAX_SIZE);
+    if (size <= 0 || size > MAX_SIZE) {//check if size is negative or greater than max size
+        printf("Invalid size! Size should be between 1 and %d.\n", MAX_SIZE);
         return;
     }
-    printf("Enter array elements:\n");//if valid, scan the elements
+    printf("Enter array elements:\n");//loop to input elements 
     for (i = 0; i < size; i++) {
         scanf("%d", &array[i]);
     }
-    printf("Array created successfully\n");//array created
+    printf("Array created successfully.\n");
 }
 
 void displayArray() {
@@ -120,17 +119,18 @@ void displayArray() {
 void insertBeginning() {
     int element;
     if (size == MAX_SIZE) {//overflow
-        printf("Array is full, cannot insert more elements\n");
+        printf("Array is full, cannot insert.\n");
         return;
     }
-    printf("Enter element to insert: ");//input
+    printf("Enter element to insert: ");//input element
     scanf("%d", &element);
-    for (int i = size; i > 0; i--) {//right shifting elements
+    size++;//increase the size of array
+    for (int i = size; i > 0; i--) {//right shift till first element
         array[i] = array[i - 1];
     }
-    array[0] = element;//overwrite first position
-    size++;
-    printf("Element inserted at the beginning successfully\n");
+    array[0] = element;//input the element in the first position
+    
+    printf("Element inserted at the beginning successfully.\n");
 }
 
 void insertEnd() {
@@ -139,33 +139,35 @@ void insertEnd() {
         printf("Array is full, cannot insert.\n");
         return;
     }
-    printf("Enter element to insert: ");//input
+    printf("Enter element to insert: ");//input element
     scanf("%d", &element);
-    size++;//increase the size of array and insert the element there
-    array[size] = element;
+    size++;//increase size of array to accomodate new element
+    array[size-1] = element;//input the element at the last index
+    
     printf("Element inserted at the end successfully.\n");
 }
 
 void insertAtPosition() {
-    int element, pos;
-    if (size == MAX_SIZE) {
-        printf("Array is full, cannot insert.\n");//overflow
+    int element, position;
+    if (size == MAX_SIZE) {//overflow
+        printf("Array is full, cannot insert.\n");
         return;
     }
     printf("Enter element to insert: ");//input element
     scanf("%d", &element);
     printf("Enter position to insert: ");//input position
-    scanf("%d", &pos);
-    if (pos < 0 || pos >= size) {//position cannot be negative or greater than equals to size since the indexing runs from 0 to size-1
+    scanf("%d", &position);
+    if (position < 0 || position >= size) {//check if the position is negative or greater than equal to size 
         printf("Invalid position!\n");
         return;
     }
-    size++;//increament size before shifting
-    for (int i = size-1; i > pos; i--) {//right shift from last index till the loop encounters the position
+	  size++;//increase the size of array to accomodate new element
+    for (int i = size-1; i >= position; i--) {//loop from last index to the position entered tp right shift elements
         array[i] = array[i - 1];
     }
-    array[pos-1] = element;
-    printf("Element inserted at position %d successfully.\n", pos);
+    array[position-1] = element;//assign the element at position
+  
+    printf("Element inserted at position %d successfully.\n", position);
 }
 
 void insertAfterElement() {
@@ -218,42 +220,42 @@ void insertBeforeElement() {
 
 
 void deleteBeginning() {
-    if (size == 0) {
+    if (size == 0) {//underflow
         printf("Array is empty, nothing to delete.\n");
         return;
     }
-    for (int i = 0; i < size - 1; i++) {
+    for (int i = 0; i < size - 1; i++) {//left shift from index 0 till n-1
         array[i] = array[i + 1];
     }
-    size--;
+    size--;//update size
     printf("Element deleted from the beginning successfully.\n");
 }
 
 void deleteEnd() {
-	if (size == 0) {
+	if (size == 0) {//underflow
         printf("Array is empty, nothing to delete.\n");
         return;
     }
-    size--;
+    size--;//decreasing the size will automatically remove the last element
     printf("Element deleted from the end successfully.\n");
 }
 
 void deleteAtPosition() {
     int position;
-    if (size == 0) {
+    if (size == 0) {//underflow
         printf("Array is empty, nothing to delete.\n");
         return;
     }
-    printf("Enter position to delete: ");
+    printf("Enter position to delete: ");//input position
     scanf("%d", &position);
-    if (position < 0 || position >= size) {
+    if (position < 0 || position >= size) {//position is negative or greater than equal to size
         printf("Invalid position!\n");
         return;
     }
-    for (int i = position; i < size - 1; i++) {
+    for (int i = position; i < size - 1; i++) {//left shift from position to the last index
         array[i] = array[i + 1];
     }
-    size--;
+    size--;//update size of the array
     printf("Element deleted from position %d successfully.\n", position);
 }
 
