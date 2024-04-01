@@ -35,10 +35,10 @@ int main() {
 
 void Push(){
 	int n;
-	if(top==MAXSIZE-1)
+	if(top==MAXSIZE-1)//overflow
 	printf("Stack is full");
 	else
-	{ printf("Enter the element you want to push ");
+	{ printf("Enter the element you want to push ");//input the element by incrementing top by 1
 	scanf("%d",&n);
 	top++;
 	stack[top]=n;
@@ -47,9 +47,9 @@ void Push(){
 	
 void Pop(){
 	if(top<0)
-	printf("stack is empty");
+	printf("stack is empty");//underflow
 	else
-	{int n;
+	{int n;//save the element in some variable to display it and decrease top by 1
 	n=stack[top];
 	top--;
 	printf("The popped elememt is %d",n);
@@ -57,10 +57,10 @@ void Pop(){
 }
 
 void Display(){
-	if(top<0)
+	if(top<0)//underflow
 	printf("stack is empty");
 	else
-	{printf("The elements of the stack are:");
+	{printf("The elements of the stack are:");//print elements from top to top=0 
 	for(int i=top;i>=0;i--)
 	printf("\n%d",stack[i]);
 	}
