@@ -29,7 +29,7 @@ bool isEmpty(struct Stack *s) {
 void push(struct Stack *s, char c) {
     if (isFull(s)) {
         printf("Stack Overflow\n");
-        return;
+        exit(EXIT_FAILURE);
     }
     s->items[++(s->top)] = c;
 }
@@ -44,7 +44,7 @@ char pop(struct Stack *s) {
 }
 
 // Function to check if parenthesis are balanced
-bool isBalanced(char *exp) {
+void checkParenthesis(char *exp) {
     struct Stack s;
     initialize(&s);
     char c;
@@ -54,18 +54,25 @@ bool isBalanced(char *exp) {
             push(&s, exp[i]);
         } else if (exp[i] == ')' || exp[i] == ']' || exp[i] == '}') {
             if (isEmpty(&s)) {
-                return false;
+                printf("Parentheses are not balanced\n");
+                return;
             } else {
                 c = pop(&s);
                 if ((exp[i] == ')' && c != '(') ||
                     (exp[i] == ']' && c != '[') ||
                     (exp[i] == '}' && c != '{')) {
-                    return false;
+                    printf("Parentheses are not balanced\n");
+                    return;
                 }
             }
         }
     }
-    return isEmpty(&s);
+
+    if (isEmpty(&s)) {
+        printf("Parentheses are balanced\n");
+    } else {
+        printf("Parentheses are not balanced\n");
+    }
 }
 
 int main() {
@@ -74,11 +81,7 @@ int main() {
     printf("Enter expression: ");
     fgets(exp, MAX_SIZE, stdin);
 
-    if (isBalanced(exp)) {
-        printf("Parentheses are balanced\n");
-    } else {
-        printf("Parentheses are not balanced\n");
-    }
+    checkParenthesis(exp);
 
     return 0;
 }
