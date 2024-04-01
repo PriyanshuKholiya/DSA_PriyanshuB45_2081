@@ -4,7 +4,7 @@
 #define MAX_SIZE 100
 
 int array[MAX_SIZE];
-int size = 0;//to check underflow
+int size = 0;
 
 void createArray();
 void displayArray();
@@ -90,13 +90,13 @@ int main() {
 
 void createArray() {
     int i;
-    printf("Enter the size of the array: ");//input size
+    printf("Enter the size of the array: ");
     scanf("%d", &size);
-    if (size <= 0 || size > MAX_SIZE) {//check if size is negative or greater than max size
+    if (size <= 0 || size > MAX_SIZE) {
         printf("Invalid size! Size should be between 1 and %d.\n", MAX_SIZE);
         return;
     }
-    printf("Enter array elements:\n");//loop to input elements 
+    printf("Enter array elements:\n");
     for (i = 0; i < size; i++) {
         scanf("%d", &array[i]);
     }
@@ -105,12 +105,12 @@ void createArray() {
 
 void displayArray() {
     int i;
-    if (size == 0) {//no elements
+    if (size == 0) {
         printf("Array is empty.\n");
         return;
     }
     printf("Array elements: ");
-    for (i = 0; i < size; i++) {//loop to print elements
+    for (i = 0; i < size; i++) {
         printf("%d ", array[i]);
     }
     printf("\n");
@@ -118,55 +118,52 @@ void displayArray() {
 
 void insertBeginning() {
     int element;
-    if (size == MAX_SIZE) {//overflow
+    if (size == MAX_SIZE) {
         printf("Array is full, cannot insert.\n");
         return;
     }
-    printf("Enter element to insert: ");//input element
+    printf("Enter element to insert: ");
     scanf("%d", &element);
-    size++;//increase the size of array
-    for (int i = size; i > 0; i--) {//right shift till first element
+    size++;
+    for (int i = size; i > 0; i--) {
         array[i] = array[i - 1];
     }
-    array[0] = element;//input the element in the first position
-    
+    array[0] = element;
     printf("Element inserted at the beginning successfully.\n");
 }
 
 void insertEnd() {
     int element;
-    if (size == MAX_SIZE) {//overflow
+    if (size == MAX_SIZE) {
         printf("Array is full, cannot insert.\n");
         return;
     }
-    printf("Enter element to insert: ");//input element
+    printf("Enter element to insert: ");
     scanf("%d", &element);
-    size++;//increase size of array to accomodate new element
-    array[size-1] = element;//input the element at the last index
-    
+    size++;
+    array[size - 1] = element;
     printf("Element inserted at the end successfully.\n");
 }
 
 void insertAtPosition() {
     int element, position;
-    if (size == MAX_SIZE) {//overflow
+    if (size == MAX_SIZE) {
         printf("Array is full, cannot insert.\n");
         return;
     }
-    printf("Enter element to insert: ");//input element
+    printf("Enter element to insert: ");
     scanf("%d", &element);
-    printf("Enter position to insert: ");//input position
+    printf("Enter position to insert: ");
     scanf("%d", &position);
-    if (position < 0 || position >= size) {//check if the position is negative or greater than equal to size 
+    if (position < 0 || position >= size) {
         printf("Invalid position!\n");
         return;
     }
-	  size++;//increase the size of array to accomodate new element
-    for (int i = size-1; i >= position; i--) {//loop from last index to the position entered tp right shift elements
+    size++;
+    for (int i = size - 1; i > position; i--) {
         array[i] = array[i - 1];
     }
-    array[position-1] = element;//assign the element at position
-  
+    array[position] = element;
     printf("Element inserted at position %d successfully.\n", position);
 }
 
@@ -220,47 +217,47 @@ void insertBeforeElement() {
 
 
 void deleteBeginning() {
-    if (size == 0) {//underflow
+    if (size == 0) {
         printf("Array is empty, nothing to delete.\n");
         return;
     }
-    for (int i = 0; i < size - 1; i++) {//left shift from index 0 till n-1
+    for (int i = 0; i < size - 1; i++) {
         array[i] = array[i + 1];
     }
-    size--;//update size
+    size--;
     printf("Element deleted from the beginning successfully.\n");
 }
 
 void deleteEnd() {
-	if (size == 0) {//underflow
+    if (size == 0) {
         printf("Array is empty, nothing to delete.\n");
         return;
     }
-    size--;//decreasing the size will automatically remove the last element
+    size--;
     printf("Element deleted from the end successfully.\n");
 }
 
 void deleteAtPosition() {
     int position;
-    if (size == 0) {//underflow
+    if (size == 0) {
         printf("Array is empty, nothing to delete.\n");
         return;
     }
-    printf("Enter position to delete: ");//input position
+    printf("Enter position to delete: ");
     scanf("%d", &position);
-    if (position < 0 || position >= size) {//position is negative or greater than equal to size
+    if (position < 0 || position >= size) {
         printf("Invalid position!\n");
         return;
     }
-    for (int i = position; i < size - 1; i++) {//left shift from position to the last index
+    for (int i = position; i < size - 1; i++) {
         array[i] = array[i + 1];
     }
-    size--;//update size of the array
+    size--;
     printf("Element deleted from position %d successfully.\n", position);
 }
 
 void deleteAfterElement() {
-	 int afterElement;
+    int afterElement;
     printf("Enter element after which to delete: ");
     scanf("%d", &afterElement);
     for (int i = 0; i < size - 1; i++) {
@@ -277,7 +274,7 @@ void deleteAfterElement() {
 }
 
 void deleteBeforeElement() {
-	int beforeElement;
+    int beforeElement;
     printf("Enter element before which to delete: ");
     scanf("%d", &beforeElement);
     for (int i = 0; i < size; i++) {
@@ -292,4 +289,3 @@ void deleteBeforeElement() {
     }
     printf("Element %d not found in the array.\n", beforeElement);
 }
-
