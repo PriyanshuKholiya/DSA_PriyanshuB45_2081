@@ -1,107 +1,115 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-// Structure for stack
-struct Stack {
+ 
+struct stack
+{
+    int size;
     int top;
-    unsigned capacity;
-    char *array;
+    char *arr;
 };
-
-// Function to create a stack
-struct Stack* createStack(unsigned capacity) {
-    struct Stack* stack = (struct Stack*) malloc(sizeof(struct Stack));
-    stack->capacity = capacity;
-    stack->top = -1;
-    stack->array = (char*) malloc(stack->capacity * sizeof(char));
-    return stack;
+ 
+int stackTop(struct stack* sp){
+    return sp->arr[sp->top];
 }
-
-// Function to check if the stack is empty
-int isEmpty(struct Stack* stack) {
-    return stack->top == -1;
-}
-
-// Function to push an element to the stack
-void push(struct Stack* stack, char item) {
-    stack->array[++stack->top] = item;
-}
-
-// Function to pop an element from the stack
-char pop(struct Stack* stack) {
-    if (!isEmpty(stack))
-        return stack->array[stack->top--];
-    return '$';
-}
-
-// Function to return the top element of the stack
-char peek(struct Stack* stack) {
-    return stack->array[stack->top];
-}
-
-// Function to check if a character is an operand
-int isOperand(char ch) {
-    return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z');
-}
-
-// Function to check precedence of operators
-int precedence(char ch) {
-    switch(ch) {
-        case '+':
-        case '-':
-            return 1;
-        case '*':
-        case '/':
-            return 2;
+ 
+int isEmpty(struct stack *ptr)
+{
+    if (ptr->top == -1)
+    {
+        return 1;
     }
-    return -1;
+    else
+    {
+        return 0;
+    }
 }
-
-// Function to convert infix expression to postfix expression
-char* infixToPostfix(char* exp) {
-    int i, k;
-    struct Stack* stack = createStack(strlen(exp));
-    if(!stack)
-        return NULL;
-    char *postfix = (char *)malloc(strlen(exp) * sizeof(char));
-    for (i = 0, k = -1; exp[i]; ++i) {
-        // If the scanned character is an operand, add it to the output
-        if (isOperand(exp[i]))
-            postfix[++k] = exp[i];
-        // If the scanned character is an '(', push it to the stack
-        else if (exp[i] == '(')
-            push(stack, exp[i]);
-        // If the scanned character is an ')', pop and output from the stack until an '(' is encountered
-        else if (exp[i] == ')') {
-            while (!isEmpty(stack) && peek(stack) != '(')
-                postfix[++k] = pop(stack);
-            if (!isEmpty(stack) && peek(stack) != '(')
-                return NULL; // Invalid expression
-            else
-                pop(stack);
-        } else { // Operator encountered
-            while (!isEmpty(stack) && precedence(exp[i]) <= precedence(peek(stack)))
-                postfix[++k] = pop(stack);
-            push(stack, exp[i]);
+ 
+int isFull(struct stack *ptr)
+{
+    if (ptr->top == ptr->size - 1)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+ 
+void push(struct stack* ptr, char val){
+    if(isFull(ptr)){
+        printf("Stack Overflow! Cannot push %d to the stack\n", val);
+    }
+    else{
+        ptr->top++;
+        ptr->arr[ptr->top] = val;
+    }
+}
+ 
+char pop(struct stack* ptr){
+    if(isEmpty(ptr)){
+        printf("Stack Underflow! Cannot pop from the stack\n");
+        return -1;
+    }
+    else{
+        char val = ptr->arr[ptr->top];
+        ptr->top--;
+        return val;
+    }
+}
+int precedence(char ch){
+    if(ch == '*' || ch=='/')
+        return 3;
+    else if(ch == '+' || ch=='-')
+        return 2; 
+    else
+        return 0;
+}
+ 
+int isOperator(char ch){
+    if(ch=='+' || ch=='-' ||ch=='*' || ch=='/') 
+        return 1;
+    else
+        return 0;
+}
+char* infixToPostfix(char* infix){
+    struct stack * sp = (struct stack *) malloc(sizeof(struct stack));
+    sp->size = 10; 
+    sp->top = -1;
+    sp->arr = (char *) malloc(sp->size * sizeof(char));
+    char * postfix = (char *) malloc((strlen(infix)+1) * sizeof(char));
+    int i=0; // Track infix traversal
+    int j = 0; // Track postfix addition 
+    while (infix[i]!='\0')
+    {
+        if(!isOperator(infix[i])){
+            postfix[j] = infix[i];
+            j++;
+            i++;
+        }
+        else{
+            if(precedence(infix[i])> precedence(stackTop(sp))){
+                push(sp, infix[i]);
+                i++;
+            }
+            else{
+                postfix[j] = pop(sp);
+                j++;
+            }
         }
     }
-    // Pop all the remaining operators from the stack
-    while (!isEmpty(stack))
-        postfix[++k] = pop(stack);
-    postfix[++k] = '\0';
+    while (!isEmpty(sp))    
+    {
+        postfix[j] = pop(sp);
+        j++;
+    }
+    postfix[j] = '\0';
     return postfix;
 }
-
-// Main function
-int main() {
-    char exp[100];
-    printf("Enter infix expression: ");
-    fgets(exp, sizeof(exp), stdin);
-    char *postfix = infixToPostfix(exp);
-    if(postfix)
-        printf("Postfix expression: %s\n", postfix);
-    else
-        printf("Invalid infix expression\n");
+int main()
+{
+    char * infix = "x-y/z-k*d";
+    printf("postfix is %s", infixToPostfix(infix));
     return 0;
 }
