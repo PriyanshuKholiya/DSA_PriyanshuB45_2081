@@ -1,8 +1,7 @@
 #include<stdio.h>
-#include<conio.h>
 #define MAXSIZE 10
 
-int queue[MAXSIZE],front=0,rear=-1;
+int queue[MAXSIZE],front=0,rear=-1;//rear behind front
 
 void Insert();
 void Delete();
@@ -34,35 +33,41 @@ int main() {
 
 void Insert(){
 	int n;
-	if(rear==MAXSIZE-1)
+	if(rear==MAXSIZE-1)//when inserter reaches max-1/overflow
 	printf("Queue is full");
 	else
-	{ printf("Enter the element you want to insert ");
+	{ printf("Enter the element you want to insert ");//input element
 	scanf("%d",&n);
-	rear++;
-	queue[rear]=n;
+	rear++;//increase rear towards front by one step
+	queue[rear]=n;//store input in the rear index
 	}
 	}
 	
 void Delete(){
-	if(front>rear)
+	if(front>rear)//when rear is behind front or front is ahead of rear
 	printf("queue is empty");
 	else
-	{int n;
+	{int n;//store the element to be deleted in n
 	n=queue[front];
-	front++;
-	printf("The deleted elememt is %d",n);
+	front++;//increase front forward by a step
+	printf("The deleted elememt is %d",n);//display whats deleted //suppose front=0 rear=0 hence one element is there if front++->front=1 rear gets left behind and there is nothing to print from front to rear by incrementing front 
+	// Check if queue becomes empty after deletion
+        if (front > rear) {
+            // If queue becomes empty, reset front and rear indices
+            front = 0;
+            rear = -1;
+        }
 	}
 }
 
-void Display(){
-	if(front>rear)
-	printf("Queue is empty");
-	else
-	{printf("\nThe elements of the stack are:");
-	for(int i=rear;i>=front;i--)
-	printf("\n%d",queue[i]);
-	}
+void Display() {
+    if (front > rear)//when rear is behind front 
+        printf("Queue is empty");
+    else {
+        printf("\nThe elements of the queue are:");
+        for (int i = front; i <= rear; i++)//displays elements from front to rear in backwards fashion
+            printf("\n%d", queue[i]);
+    }
 }
 
 
