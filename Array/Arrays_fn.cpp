@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_SIZE 100
+#define MAX_SIZE 100 
 
 int array[MAX_SIZE];
 int size = 0;
@@ -90,14 +90,14 @@ int main() {
 
 void createArray() {
     int i;
-    printf("Enter the size of the array: ");
+    printf("Enter the size of the array: ");//input size
     scanf("%d", &size);
-    if (size <= 0 || size > MAX_SIZE) {
+    if (size <= 0 || size > MAX_SIZE) {// check if size is negative or greater than max size print invalid if true
         printf("Invalid size! Size should be between 1 and %d.\n", MAX_SIZE);
         return;
     }
     printf("Enter array elements:\n");
-    for (i = 0; i < size; i++) {
+    for (i = 0; i < size; i++) {//else scan elements from index zero to size-1
         scanf("%d", &array[i]);
     }
     printf("Array created successfully.\n");
@@ -105,12 +105,12 @@ void createArray() {
 
 void displayArray() {
     int i;
-    if (size == 0) {
+    if (size == 0) {//if size is zero means no array is created
         printf("Array is empty.\n");
         return;
     }
     printf("Array elements: ");
-    for (i = 0; i < size; i++) {
+    for (i = 0; i < size; i++) {//
         printf("%d ", array[i]);
     }
     printf("\n");
