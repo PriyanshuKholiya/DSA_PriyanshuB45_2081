@@ -82,25 +82,25 @@ void insertBeforeElement() {
         }
     }
     if (index == -1) {  // Check if element is not found
-        printf("Element not found\n");  // Print message if element is not found
+        printf("Element not found\n");  
         return;
     }
     size++;  // Increment size
     array = (int *)realloc(array, size * sizeof(int));  // Reallocate memory to accommodate new element
     if (array == NULL) {  // Check if memory allocation failed
-        printf("Memory allocation failed\n");  // Print message if memory allocation failed
+        printf("Memory allocation failed\n");  
         exit(1);  // Exit program
     }
     for (int i = size - 1; i > index; i--) {  // Shift elements to the right
         array[i] = array[i - 1];  // Shift elements
     }
-    printf("Enter the element to insert: ");  // Prompt for element to insert
+    printf("Enter the element to insert: ");  
     scanf("%d", &array[index]);  // Input element to insert before specified element
 }
 
 void deleteBeginning() {
     if (size == 0) {  // Check if array is empty
-        printf("Array is empty\n");  // Print message if array is empty
+        printf("Array is empty\n");  
         return;
     }
     for (int i = 0; i < size - 1; i++) {  // Loop to shift elements
@@ -112,7 +112,7 @@ void deleteBeginning() {
 
 void deleteEnd() {
     if (size == 0) {  // Check if array is empty
-        printf("Array is empty\n");  // Print message if array is empty
+        printf("Array is empty\n");  
         return;
     }
     size--;  // Decrement size
