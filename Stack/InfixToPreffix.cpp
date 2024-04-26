@@ -117,7 +117,6 @@ char* infixToPrefix(char* infix) {
     return postfix;
 }
 
-// Main function
 int main() {
     char infix[100];
     printf("Enter infix expression: ");
