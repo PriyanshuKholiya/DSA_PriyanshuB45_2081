@@ -58,11 +58,11 @@ void insertAfterElement() {
     int ele;
     printf("Enter the element after which you want to insert: ");  
     scanf("%d", &ele);  // Input element after which to insert
-    for (int i = 0; i < size; i++) {  // Loop to search for element
-        if (array[i] == ele) {  // Check if element is found
-            size++;  // Increment size
+    for (int i = 0; i < size; i++) {  // linear search the element
+        if (array[i] == ele) {  
+            size++;  
             array = (int *)realloc(array, size * sizeof(int));  // Reallocate memory to accommodate new element
-            printf("Enter the element to insert: ");  // Prompt for element to insert
+            printf("Enter the element to insert: ");  
             scanf("%d", &array[i + 1]);  // Input element to insert after specified element
             return;
         }
@@ -72,11 +72,11 @@ void insertAfterElement() {
 
 void insertBeforeElement() {
     int ele;
-    printf("Enter the element before which you want to insert: ");  // Prompt for element before which to insert
-    scanf("%d", &ele);  // Input element before which to insert
+    printf("Enter the element before which you want to insert: ");  // Input element before which to insert
+    scanf("%d", &ele);  
     int index = -1;  // Initialize index variable to track position of element
-    for (int i = 0; i < size; i++) {  // Loop to search for element
-        if (array[i] == ele) {  // Check if element is found
+    for (int i = 0; i < size; i++) {  
+        if (array[i] == ele) {  // Check if element is found by linear search
             index = i;  // Store index of element
             break;
         }
