@@ -169,123 +169,123 @@ void insertAtPosition() {
 
 void insertAfterElement() {
     int afterElement, element;
-    if (size >= MAX_SIZE) {
-        printf("Array is full, cannot insert.\n");
+    if (size == MAX_SIZE) {//chekck if SIZE has reached max size 
+        printf("Array is full, cannot insert.\n");//print overflow
         return;
     }
-    printf("Enter element after which to insert: ");
+    printf("Enter element after which to insert: ");//input element sfter which you want the element to be inserted
     scanf("%d", &afterElement);
-    printf("Enter element to insert: ");
+    printf("Enter element to insert: ");//input element
     scanf("%d", &element);
-    for (int i = 0; i < size; i++) {
+    size++;//increment the size of the array
+    for (int i = 0; i < size; i++) {//linearly search for the element before which you wnat to insert
         if (array[i] == afterElement) {
-            for (int j = size; j > i + 1; j--) {
+            for (int j = size; j > i + 1; j--) {//if found right shift all the elements from the position
                 array[j] = array[j - 1];
             }
-            array[i + 1] = element;
-            size++;
+            array[i + 1] = element;//insert the element at posn +1
             printf("Element %d inserted after %d successfully.\n", element, afterElement);
             return;
         }
     }
-    printf("Element %d not found in the array.\n", afterElement);
+    printf("Element %d not found in the array.\n", afterElement);//if linear search fails print error
 }
 
 void insertBeforeElement() {
     int beforeElement, element;
-    if (size >= MAX_SIZE) {
+    if (size == MAX_SIZE) {//if size equals max size array is full
         printf("Array is full, cannot insert.\n");
         return;
     }
-    printf("Enter element before which to insert: ");
+    printf("Enter element before which to insert: ");//input element before which you want to insert the element
     scanf("%d", &beforeElement);
-    printf("Enter element to insert: ");
+    printf("Enter element to insert: ");//input element to insert
     scanf("%d", &element);
-    for (int i = 0; i < size; i++) {
+    size++;//increment the size of the array
+    for (int i = 0; i < size-1; i++) {//linearly search for the element before which you want to insert
         if (array[i] == beforeElement) {
-            for (int j = size; j > i; j--) {
+            for (int j = size; j > i; j--) {//if found right shift all the elements from where it is found
                 array[j] = array[j - 1];
             }
-            array[i] = element;
-            size++;
+            array[i] = element;//insert the element where
             printf("Element %d inserted before %d successfully.\n", element, beforeElement);
             return;
         }
     }
-    printf("Element %d not found in the array.\n", beforeElement);
+    printf("Element %d not found in the array.\n", beforeElement);//if linear seach fails
 }
 
 
 void deleteBeginning() {
-    if (size == 0) {
+    if (size == 0) {//if size is zero array is empty
         printf("Array is empty, nothing to delete.\n");
         return;
     }
-    for (int i = 0; i < size - 1; i++) {
+    for (int i = 0; i < size - 1; i++) {//else left shift all the elements by one
         array[i] = array[i + 1];
     }
-    size--;
+    size--;//decrease the size of the array
     printf("Element deleted from the beginning successfully.\n");
 }
 
 void deleteEnd() {
-    if (size == 0) {
+    if (size == 0) {//if size is zero array is empty
         printf("Array is empty, nothing to delete.\n");
         return;
     }
-    size--;
+    size--;//decreasing size automatically removes last element
     printf("Element deleted from the end successfully.\n");
 }
 
 void deleteAtPosition() {
     int position;
-    if (size == 0) {
+    if (size == 0) {//if size of array is zero array is empty
         printf("Array is empty, nothing to delete.\n");
         return;
     }
-    printf("Enter position to delete: ");
+    printf("Enter position to delete: ");//input position at which you want to delete the element
     scanf("%d", &position);
-    if (position < 0 || position >= size) {
+    if (position < 0 || position >= size) {//checkk if position is negative or greater than size
         printf("Invalid position!\n");
         return;
     }
-    for (int i = position; i < size - 1; i++) {
+    for (int i = position; i < size - 1; i++) {//iterate till the position and left shift all the elements after it
         array[i] = array[i + 1];
     }
-    size--;
+    size--;//decrease the size of the array
     printf("Element deleted from position %d successfully.\n", position);
 }
 
 void deleteAfterElement() {
     int afterElement;
-    printf("Enter element after which to delete: ");
+    printf("Enter element after which to delete: ");//input element after which the element isto be deleted 
     scanf("%d", &afterElement);
-    for (int i = 0; i < size - 1; i++) {
+    for (int i = 0; i < size - 1; i++) {//linearly search for the element
         if (array[i] == afterElement) {
-            for (int j = i + 1; j < size - 1; j++) {
+            for (int j = i + 1; j < size - 1; j++) {//if found left shift all the elements till posn i+1
                 array[j] = array[j + 1];
             }
-            size--;
+            size--;//decrease the size of the array
             printf("Element deleted after %d successfully.\n", afterElement);
             return;
         }
     }
-    printf("Element %d not found in the array.\n", afterElement);
+    printf("Element %d not found in the array.\n", afterElement);//if npt found
 }
 
 void deleteBeforeElement() {
     int beforeElement;
-    printf("Enter element before which to delete: ");
+    printf("Enter element before which to delete: ");//input element before which you want to delete 
     scanf("%d", &beforeElement);
     for (int i = 0; i < size; i++) {
-        if (array[i] == beforeElement) {
-            for (int j = i - 1; j < size - 1; j++) {
+        if (array[i] == beforeElement) {//search for the element linearly
+            for (int j = i - 1; j < size - 1; j++) {//if found left shift all the elements till posn-1
                 array[j] = array[j + 1];
             }
-            size--;
+            size--;//decrease the size of the array
             printf("Element deleted before %d successfully.\n", beforeElement);
             return;
         }
     }
-    printf("Element %d not found in the array.\n", beforeElement);
+    printf("Element %d not found in the array.\n", beforeElement);//if not found
 }
